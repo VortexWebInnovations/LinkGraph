@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MBJ6B6L6LH"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-MBJ6B6L6LH');
+    </script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="robots" content="noindex">
+    <meta name="googlebot" content="noindex">
+    <title>Link Graph</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/product.css" rel="stylesheet">
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+
+        .b-example-divider {
+            width: 100%;
+            height: 3rem;
+            background-color: rgba(0, 0, 0, .1);
+            border: solid rgba(0, 0, 0, .15);
+            border-width: 1px 0;
+            box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+        }
+
+        .b-example-vr {
+            flex-shrink: 0;
+            width: 1.5rem;
+            height: 100vh;
+        }
+
+        .bi {
+            vertical-align: -.125em;
+            fill: currentColor;
+        }
+
+        .nav-scroller {
+            position: relative;
+            z-index: 2;
+            height: 2.75rem;
+            overflow-y: hidden;
+        }
+
+        .nav-scroller .nav {
+            display: flex;
+            flex-wrap: nowrap;
+            padding-bottom: 1rem;
+            margin-top: -1px;
+            overflow-x: auto;
+            text-align: center;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .btn-bd-primary {
+            --bd-violet-bg: #712cf9;
+            --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+
+            --bs-btn-font-weight: 600;
+            --bs-btn-color: var(--bs-white);
+            --bs-btn-bg: var(--bd-violet-bg);
+            --bs-btn-border-color: var(--bd-violet-bg);
+            --bs-btn-hover-color: var(--bs-white);
+            --bs-btn-hover-bg: #6528e0;
+            --bs-btn-hover-border-color: #6528e0;
+            --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+            --bs-btn-active-color: var(--bs-btn-hover-color);
+            --bs-btn-active-bg: #5a23c8;
+            --bs-btn-active-border-color: #5a23c8;
+        }
+
+        .bd-mode-toggle {
+            z-index: 1500;
+        }
+
+        .screenshot-example .screenshot {
+            width: 100%;
+        }
+    </style>
+
+</head>
+<body>
+
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="aperture" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+            stroke-width="2" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"/>
+    </symbol>
+    <symbol id="cart" viewBox="0 0 16 16">
+        <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+    </symbol>
+    <symbol id="chevron-right" viewBox="0 0 16 16">
+        <path fill-rule="evenodd"
+              d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+    </symbol>
+</svg>
+
+<nav class="navbar navbar-expand-md bg-dark sticky-top border-bottom" data-bs-theme="dark">
+    <div class="container">
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="#offcanvas" aria-labelledby="#offcanvasLabel">
+            <div class="offcanvas-body p-4 pt-0 p-lg-0">
+                <hr class="d-lg-none text-white-50">
+                <ul class="navbar-nav flex-row flex-wrap bd-navbar-nav">
+                    <li class="nav-item col-6 col-lg-auto">
+                        <a class="nav-link py-2 px-0 px-lg-2" href="/LinkGraph/">Link Graph</a>
+                    </li>
+                    <li class="nav-item col-6 col-lg-auto">
+                        <a class="nav-link py-2 px-0 px-lg-2" href="/LinkGraph/privacy_policy.html">Privacy
+                            Policy</a>
+                    </li>
+                    <li class="nav-item col-6 col-lg-auto">
+
+                    </li>
+
+                </ul>
+                <a class="nav-link py-2 px-0 px-lg-2" href="" target="_blank" rel="noopener">
+                    <svg class="bi" width="24" height="24">
+                        <use xlink:href="#cart"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+<main>
+    <div class="col-lg-8 mx-auto p-4 py-md-5">
+        <h1 class="text-body-emphasis text-center">Terms of Use</h1>
+
+        <div class="row">
+            <div class="col-qw">
+                <p>Apps distributed through the Atlassian Marketplace</p>
+
+                <p>This Agreement sets forth the terms and conditions for licensing the App developed by VortexWeb
+                    Innovations company ("Vendor") that you have chosen to purchase or evaluate from the Atlassian
+                    Marketplace.</p>
+
+                <p>Please carefully read and review this Agreement. By downloading, installing, subscribing to the App,
+                    or otherwise indicating your acceptance, you agree to be bound by the terms of this Agreement.</p>
+
+                <p>If you do not agree to all the terms of this Agreement, do not download, install, subscribe to the
+                    App, or give consent to this Agreement.</p>
+
+                <p>If you are accepting this Agreement on behalf of your employer or another company or organization,
+                    you represent and warrant that you have the full authority to act for and bind that legal entity to
+                    this Agreement. The terms "you" and "your" in this Agreement refer to that legal entity.</p>
+
+                <p>For the purposes of Section 3(a) of the Atlassian Marketplace Terms of Use, this Agreement
+                    constitutes the "Publisher's EULA."</p>
+
+                <h1>1. Definitions</h1>
+                <p>"Agreement" refers to these Terms of Use for VortexWeb Innovations Apps distributed through the
+                    Atlassian Marketplace.</p>
+                <p>"App" means a software application developed and distributed by Vendor that you obtain through the
+                    Atlassian Marketplace, including Documentation, upgrades, modified or subsequent versions, updates,
+                    or error corrections provided by Vendor.</p>
+                <p>"Host Application" means a software application developed and distributed by Atlassian that the App
+                    is designed to interoperate or work with (e.g., Confluence, Bitbucket, Jira).</p>
+                <p>"Atlassian Marketplace" means the online marketplace for server and cloud apps owned and operated by
+                    Atlassian, available at https://marketplace.atlassian.com.</p>
+                <p>"Atlassian" means Atlassian Pty Ltd, an Australian corporation (ABN 53 102 443 916), the owner and
+                    provider of the Atlassian Marketplace and a reseller of Apps available through the Atlassian
+                    Marketplace.</p>
+                <p>"Documentation" refers to any user manuals, FAQs or support pages, information on the App Details
+                    Page, and other documentation related to the App provided by Vendor in electronic or online
+                    form.</p>
+                <p>"App Details Page" means a section of the Atlassian Marketplace dedicated to a specific App, which
+                    may include several webpages or tabs.</p>
+                <p>"Cloud App" means an App that runs on Atlassian's servers and is provided to you as a cloud-based
+                    (software-as-a-service) solution for the applicable subscription term.</p>
+                <p>"Reseller" means Atlassian, Atlassian Solution Partners, or other Atlassian authorized resellers from
+                    whom you obtained the App from the Atlassian Marketplace.</p>
+                <p>"Atlassian Marketplace T&C" refers to the Atlassian Marketplace Terms of Use and other sections of
+                    the Atlassian website relevant to apps developed by Atlassian verified vendors and distributed
+                    through the Atlassian Marketplace.</p>
+                <p>"Authorized User" means a person who accesses and uses the App and, in the case of paid Apps, for
+                    which the necessary fees have been paid to Resellers.</p>
+                <p>"Scope of Use" refers to your authorized scope of use for the App as specified in the ordering
+                    documentation, including the number and type of Authorized Users, storage or capacity (for Cloud
+                    Apps), numbers of licenses, copies, or instances (for Server Apps), or other restrictions or
+                    billable units, as applicable.</p>
+                <p>"Systems" means hardware systems owned, leased, operated, or controlled by you.</p>
+                <p>"Access Credentials" refers to the Authorized Users' IDs and passwords required to access the
+                    functionality of the App (if applicable).</p>
+                <p>"Third-Party Services" refers to software platforms, services, plug-ins, applications, and components
+                    developed and/or provided by Atlassian or other Atlassian vendors and software developers.</p>
+                <p>"Affiliate" means an entity which, directly or indirectly, owns or controls, is owned or controlled
+                    by, or is under common ownership or control with a party of this Agreement, where "control" means
+                    the power to direct the management or affairs of an entity, and "ownership" means the beneficial
+                    ownership of 50% or more of the voting equity securities or other equivalent voting interests of the
+                    entity.</p>
+                <h1>2. Ownership</h1>
+                <p>Vendor or its licensors own all rights, title, and interest, including worldwide intellectual
+                    property rights, in the App and the trademarks, service marks, and logos contained therein. The App
+                    is licensed to you directly by Vendor and is not sold, regardless of the use of terms such as
+                    "purchase" or "sale."</p>
+
+                <h1>3. License Grant</h1>
+                <p>Subject to the terms and conditions of this Agreement and upon payment of the applicable fee to
+                    Reseller (except for evaluation periods and free Apps), you are granted a limited, worldwide,
+                    non-exclusive, non-transferable, non-assignable, non-sublicensable, and revocable license to:</p>
+
+                <p>Access and use the App on your Systems for a single instance of your Host Application during the term
+                    of the Agreement or the applicable subscription term.</p>
+                <p>For paid Apps:</p>
+
+                <p>Use the App according to the Scope of Use, the license terms provided in the "Pricing" section of the
+                    App Details Page, and the Documentation.</p>
+                <p>For free Apps:</p>
+
+                <p>Use the App according to the terms specified in the Documentation.</p>
+                <p>No other rights, titles, or interests are granted except as expressly stated in this Agreement.</p>
+
+                <p>The license is granted on the condition that you ensure the maximum number of Authorized Users who
+                    can access and use the App concurrently is less than or equal to the number of users for which the
+                    necessary fees have been paid to Resellers. The maximum number of Authorized Users will be
+                    determined by the license tier you have chosen when ordering the App.</p>
+
+                <p>You acknowledge that the App will only function if its license tier matches the tier of the Host
+                    Application.</p>
+
+                <h1>4. License Restrictions</h1>
+                <p>You may not:</p>
+                <p>Reverse engineer, decompile, or disassemble the App or seek to obtain or derive the source code,
+                    underlying ideas, or algorithms, except as permitted by law.</p>
+                <p>Adapt, alter, modify, translate, or attempt to create derivative works of the App.</p>
+                <p>Defeat, bypass, disable, interfere with, or otherwise circumvent any license key mechanism in the App
+                    or any other mechanisms intended to limit your use.</p>
+                <p>Attempt to access or use the App other than by using the Access Credentials.</p>
+                <p>Remove or alter any trademark, logo, copyright, or other proprietary notices, symbols, or labels in
+                    the App.</p>
+                <p>Redistribute, encumber, sell, rent, lease, sublicense, assign, or otherwise transfer the App or any
+                    rights or interest therein.</p>
+                <p>Use the App as part of a service provider, software-as-a-service, display, perform, publish, or
+                    permit third parties to benefit from the use or functionality of the App, unless expressly permitted
+                    by this Agreement.</p>
+                <p>Use the App in any manner not authorized by this Agreement.</p>
+
+                <h1>5. Payment, Subscriptions, Renewals, Refunds, Delivery</h1>
+                <p>The pricing terms and conditions are outlined in the "Pricing" section of the App Details Page and
+                    are subject to change.</p>
+                <p>Cloud Apps are subscription-based.</p>
+
+                <p>Reseller will provide login instructions to the email address(es) you specified. All deliveries will
+                    be electronic. You are responsible for installing the App and ensuring its compatibility with your
+                    Systems, hardware, software, and services.</p>
+
+                <p>All payments, deliveries, renewals, subscriptions, and refunds are handled and managed through
+                    Reseller. Vendor is not involved in these matters, is not responsible for payment processing,
+                    delivery, renewals, subscriptions, or refunds, and shallnot be liable for any issues related to
+                    them. Please refer to the "Pricing" section of the App Details Page and the relevant Atlassian
+                    Marketplace T&C for detailed information about pricing, delivery, billing, subscriptions, renewals,
+                    and payment terms.</p>
+
+                <h1>6. Authorized Users</h1>
+                <p>Only Authorized Users are allowed to access and use the App. Some Apps may offer different types of
+                    Authorized Users, and the functionality may vary depending on the type of Authorized User.
+                    Authorized Users can be employees, representatives, consultants, contractors, agents, or other third
+                    parties acting for your benefit or on your behalf, including your Affiliates.</p>
+                <p>You may permit your customers to have limited access to certain Apps as Authorized Users under the
+                    following conditions:</p>
+
+                <p>You have valid agreements with your customers that require compliance with the applicable terms of
+                    this Agreement, including any conditions or restrictions related to the use or access of the
+                    App.</p>
+                <p>Your customers' access and use of the App are solely for supporting their use of your own products
+                    and services unrelated to the App.</p>
+                <p>Your customers do not receive any administrator, configuration, or similar access to the App.</p>
+                <p>You do not charge your customers for such access to the App.</p>
+                <p>You are responsible for ensuring compliance with this Agreement by all Authorized Users. All use of
+                    the App by you and your Authorized Users must be within the Scope of Use, as specified in the
+                    Documentation, and solely for the benefit of you or your Affiliates.</p>
+
+                <h1>7. Access Credentials</h1>
+                <p>If the App requires Access Credentials, you must ensure that all Authorized Users keep their Access
+                    Credentials strictly confidential and do not share them with unauthorized individuals. User IDs are
+                    granted to specific individuals and cannot be shared. Neither you nor Authorized Users may convey,
+                    transfer, or disseminate Access Credentials or their parts to any other person, entity, or
+                    organization.</p>
+                <p>You accept responsibility for maintaining the confidentiality and proper use of the Access
+                    Credentials provided to your Authorized Users for accessing and using the App. You agree to notify
+                    Vendor immediately if you become aware of any loss, theft, or unauthorized use of Access
+                    Credentials.</p>
+
+                <h1>8. Evaluation License</h1>
+                <p>The App may be provided for a free evaluation period to assess its features and performance. The
+                    evaluation license is granted for evaluation purposes only and for a limited time.</p>
+                <p>Evaluation terms and conditions, including any extensions, are handled by Atlassian. Please refer to
+                    the "Pricing" section of the App Details Page for more details.</p>
+
+                <p>Vendor may also provide a free beta evaluation period for testing and evaluating the App before its
+                    official release. The beta license is granted for evaluation purposes only and for a limited time.
+                    Vendor handles the provisioning and termination of beta evaluation licenses.</p>
+
+                <h1>9. Third-Party Software and Services</h1>
+                <p>The App may connect, interoperate, work with, and/or utilize Third-Party Services.</p>
+                <p>You acknowledge and understand that:</p>
+
+                <p>Your use of any Third-Party Service and associated information will be governed by the applicable
+                    license agreements or terms of services with the respective third party. You must comply with those
+                    terms. Vendor is not responsible for the performance and reliability of any Third-Party Services and
+                    disclaims any liability related to your use of such services.</p>
+                <p>Vendor does not investigate or review any Third-Party Services and does not endorse or disapprove of
+                    them.</p>
+
+                <h1>10. Maintenance (Updates and Support)</h1>
+                <p>The purchase price of Server Apps includes maintenance, including version updates and support.</p>
+                <p>You are eligible for maintenance of Cloud Apps as long as your subscription is active.</p>
+
+                <p>The pricing details and terms of maintenance renewal are specified in the "Pricing" section of the
+                    App Details Page.</p>
+
+                <p>Vendor may, at its sole discretion and on its own terms, provide maintenance for free Apps or Apps
+                    provisioned via a beta license.</p>
+
+
+                <p>Support for the App includes online documentation and email support. Support is available in English,
+                    but Vendor may offer support in other languages or through other communication channels at its
+                    discretion.</p>
+
+                <p>Vendor will make updates or upgrades available for the App as and when they become available.</p>
+
+                <p>Support and maintenance do not include custom software development or implementation of custom
+                    features for the App, assistance with the Host Application or any other third-party services or
+                    products, or their updating, maintenance, or support.</p>
+
+                <h1>11. Data Collection and Privacy Policy</h1>
+                <p>Any information and data collected by Vendor from you or your device will be subject to Vendor's
+                    Privacy Policy.</p>
+                <p>By entering into this Agreement, you agree to be bound by the Privacy Policy, as it exists at any
+                    relevant time.</p>
+
+                <h1>12. Confidentiality</h1>
+                <p>Vendor does not require you to provide any confidential or non-public information.</p>
+                <p>Except as otherwise stated in this Agreement, all code, inventions, know-how, business, technical,
+                    and financial information disclosed by one party ("Disclosing Party") to the other party ("Receiving
+                    Party") constitute the confidential property of the Disclosing Party ("Confidential Information").
+                    The Receiving Party agrees to hold such Confidential Information in confidence and not to use or
+                    disclose it except as permitted by this Agreement. The Receiving Party's obligations regarding
+                    Confidential Information do not apply to information that:</p>
+
+                <p>Was already in the Receiving Party's possession or known to it prior to the disclosure.</p>
+                <p>Became public knowledge through no fault of the Receiving Party.</p>
+                <p>Was rightfully obtained by the Receiving Party from a third party without breach of any
+                    confidentiality obligation.</p>
+                <p>Was independently developed by the Receiving Party's employees who had no access to the Confidential
+                    Information.</p>
+                <p>Vendor's intellectual property and technology will be considered Confidential Information without any
+                    specific marking or designation.</p>
+
+                <p>The Receiving Party shall not use or disclose any Confidential Information except as authorized
+                    herein or as required by law.</p>
+
+                <h1>13. Disclaimers of Warranties</h1>
+                <p>The App is provided "as is" and without warranty of any kind, express or implied.</p>
+                <p>All express or implied conditions, representations, and warranties, including any implied warranty of
+                    merchantability, fitness for a particular purpose, or non-infringement, are disclaimed to the extent
+                    permitted by law. You assume responsibility for selecting the App to achieve your intended results
+                    and for the installation, use, and results obtained from the App or the information made available
+                    through the App. Vendor makes no warranty that the App will be error-free or free from
+                    interruptions, failures, or that it will meet your requirements.</p>
+
+                <h1>14. Limitation of Liability</h1>
+                <p>Neither party shall be liable for any loss resulting from causes beyond its direct control, including
+                    but not limited to electronic or mechanical equipment failures, communication line failures,
+                    Internet or telephone issues, unauthorized access, theft, errors, or force majeure events.</p>
+                <p>To the extent not prohibited by law, neither party shall be liable for any lost revenue, profit, or
+                    data, or for special, indirect, consequential, incidental, or punitive damages, regardless of the
+                    theory of liability, arising out of or related to the use of or inability to use the App, even if a
+                    party has been advised of the possibility of such damages. The foregoing limitation of liability
+                    applies to the fullest extent permitted by law in the applicable jurisdiction. The aggregate
+                    liability of either party to the other shall not exceed the amount actually paid by you to the
+                    Reseller for the App in the 6 months immediately preceding the claim. Notwithstanding anything else
+                    in this Agreement, our aggregate liability to you for free Apps shall be limited to US$20. No
+                    aggregate liability applies to Apps provisioned via a beta license. This limitation of liability
+                    shall not apply to either party's express indemnification obligations in this Agreement or to your
+                    breach of Section 4 (License Restrictions). The parties agree that the limitations specified in this
+                    section will survive and apply even if any limited remedy specified in this Agreement fails of its
+                    essential purpose.</p>
+
+                <p>Tothe maximum extent permitted by applicable law, we disclaim all obligations or liabilities with
+                    respect to free Apps, including any maintenance, warranty, and indemnity obligations.</p>
+
+                <h1>15. Indemnification</h1>
+                <p>Indemnification by You: You agree to indemnify and hold harmless Vendor, its Affiliates, officers,
+                    directors, employees, agents, and representatives from any and all claims, liabilities, losses,
+                    damages, suits, judgments, litigation costs, and attorney's fees arising from or related to your use
+                    of the App and/or your violation of this Agreement or any third party's rights.</p>
+                <p>Indemnification by Vendor: Vendor agrees to indemnify, defend, and hold harmless you, your
+                    Affiliates, officers, directors, employees, agents, and representatives from any and all claims,
+                    liabilities, losses, damages, suits, judgments, litigation costs, and attorney's fees arising from
+                    or related to any threatened or actual claim for infringement, breach, or misappropriation of any
+                    intellectual property or proprietary right based on the use of the App by you or your
+                    Affiliates.</p>
+
+                <h1>16. Modifications</h1>
+                <p>Vendor reserves the right, at its sole discretion, to modify or revise this Agreement, update or
+                    modify the Documentation, make changes, update or discontinue the App or any of its features or
+                    functionalities, and terminate or restrict access to the App.</p>
+                <p>If a revision of the Agreement significantly reduces your rights, we will make reasonable efforts to
+                    notify you through email, postings on Vendor's website, or within the App itself. You may be
+                    required to accept the updated Agreement.</p>
+
+                <p>If you do not agree to the updated Agreement after it becomes effective, you must discontinue your
+                    use of the App.</p>
+
+                <p>Your continued use of the App after a change or update has been made will constitute your acceptance
+                    of the amended Agreement.</p>
+
+                <h1>17. Term and Termination</h1>
+                <p>This Agreement begins upon your first installation, download, subscription, or use of the App,
+                    regardless of whether it is provided for evaluation, as a fully licensed version, a beta licensed
+                    version, or in any other form.</p>
+                <p>Unless terminated earlier as provided herein or due to the expiration of the evaluation period, this
+                    Agreement is effective for the term specified in the "Pricing" section of the App Details Page.</p>
+
+                <p>You may terminate this Agreement at any time for any reason or no reason.</p>
+
+                <p>Vendor may suspend or terminate this Agreement with you or suspend or terminate your use of the App
+                    at any time without liability if:</p>
+
+                <p>You violate any term of this Agreement.</p>
+                <p>You infringe proprietary rights, privacy rights, or intellectual property rights of any person,
+                    business, or organization.</p>
+                <p>Your actions related to the use of the App are illegal, cause liability, harm, abuse, or disruption
+                    to you, other users, Vendor, or any third parties, or to the App.</p>
+                <p>We have not received the corresponding payment for the App from the Reseller.</p>
+                <p>Termination is required by law.</p>
+                <p>Vendor ceases to offer or discontinues the App.</p>
+                <p>We may terminate your right to use free Apps or Apps provisioned via a beta license at any time and
+                    for any reason in our sole discretion, without liability to you.</p>
+
+                <p>Your license will end upon any termination of this Agreement, even if it is identified as "perpetual"
+                    or if no expiration date is specified when you ordered the App.</p>
+
+                <p>Upon termination, all license grants will end, and you must destroy and permanently erase all copies
+                    of the App and Vendor's Confidential Information and cease all use.</p>
+
+                <p>Regardless of the cause of termination, you will not receive any credits or refunds for any license
+                    or maintenance fees paid in advance, unless otherwise provided by the Atlassian Marketplace T&C. You
+                    acknowledge that Resellers are responsible for refunds, and you will not request any refunds from
+                    Vendor.</p>
+
+                <p>Survival: The following provisions will survive any termination or expiration of this Agreement:
+                    Sections 2 (Ownership), 4 (License Restrictions), 5 (Payment, Subscriptions, Renewals, Refunds,
+                    Delivery), 9 (Third-Party Software and Services), 12 (Confidentiality), 13 (Disclaimers of
+                    Warranties), 14 (Limitation of Liability), 17 (Term and Termination), 18 (Jurisdiction), and 19
+                    (Miscellaneous).</p>
+
+                <h1>18. Jurisdiction</h1>
+                <p>Choice of Law: This Agreement is governed by the laws of the Republic of Armenia, without regard to
+                    its conflict of laws principles. The United Nations Convention on Contracts for the International
+                    Sale of Goods does not apply.</p>
+                <p>Location for Resolving Disputes: Any disputes or claims related to this Agreement will be resolved by
+                    state courts located in the Republic of Armenia. By entering into this Agreement, you waive any
+                    claims against Vendor and/or its Affiliates based on the laws of other jurisdictions, including your
+                    own. You consent to the exclusive jurisdiction and venue of the state courts in the Republic of
+                    Armenia for resolving any disputes or claims with us. This provision does not limit Vendor's right
+                    to take legal action in any other court of competent jurisdiction. The submission to the
+                    jurisdiction of a specific court does not preclude proceedings in other jurisdictions, whether
+                    concurrently or not, to the extent permitted by the law of such other jurisdiction.</p>
+
+                <h1>19. Miscellaneous</h1>
+                <p>Consent to Receive Communications in Electronic Form: By entering into this Agreement, you consent to
+                    receive communications from us in electronic form via the email address you provided. You agree that
+                    this Agreement, along with all other agreements, notices, disclosures, and other communications
+                    provided to you electronically, satisfy any legal requirement that such communications be in
+                    writing.</p>
+                <p>Severability: If any provision of this Agreement is held to be unenforceable, the Agreement will
+                    remain in effect with the provision omitted, unless its omission would frustrate the intent of the
+                    parties, in which case the Agreement will terminate immediately.</p>
+
+                <p>Export/Import Laws: You are responsible for complying with any applicable export or import rules,
+                    regulations, and restrictions related to the purchase or use of the App.</p>
+
+                <p>Assignment: You may not assign or transfer this Agreement. Vendor may freely assign, transfer, and
+                    delegate its rights and obligations under this Agreement. Vendor's Affiliates, contractors, and
+                    service providers may exercise all rights of Vendor under this Agreement.</p>
+
+                <p>Entire Agreement: This Agreement constitutes the entire agreement between you and Vendor regarding
+                    its subject matter and supersedes all prior or contemporaneous oral or written communications,
+                    proposals, representations, and warranties. This Agreement prevails over any conflicting or
+                    additional terms in any quote, order, acknowledgment, letter, or other communication between the
+                    parties relating to its subject matter during the term of this Agreement.</p>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="container py-5">
+    <div class="row">
+        <div class="col-12 col-md">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"
+                 stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="d-block mb-2" role="img"
+                 viewBox="0 0 24 24"><title>Product</title>
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"/>
+            </svg>
+            <small class="d-block mb-3 text-body-secondary">&copy; 2017–2023 VortexWeb Innovations</small>
+            <small class="d-block mb-3 text-body-secondary"><a
+                    href="mailto:vortext.web.innovations@gmail.com?subject=LinkGraph Report">support mail</a></small>
+        </div>
+    </div>
+</footer>
+<script data-jsd-embedded data-key="a175cd69-d0d8-4d09-a0b2-3f32e1230afe" data-base-url="https://jsd-widget.atlassian.com" src="https://jsd-widget.atlassian.com/assets/embed.js"></script>
+<script src="js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
